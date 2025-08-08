@@ -127,14 +127,11 @@ jobs:
                If STATUS=="PASS": include:
                - All required guideline items appear satisfied based on the PR title/body/diff.
 
-               Save to /tmp/guidelines_comment.md using a heredoc.
 
-            5. Upsert the comment (update if it exists, otherwise create):
-               - Find an existing comment with the marker using gh api:
-                 COMMENT_ID="$(gh api repos/"${REPOSITORY}"/issues/"${PR_NUMBER}"/comments --paginate --jq '.[] | select(.body | test("<!--\\s*guidelines-check:")) | .id' | tail -n1)"
-               - If COMMENT_ID is non-empty, update it:
-                 gh api repos/"${REPOSITORY}"/issues/comments/"${COMMENT_ID}" -X PATCH -f body=@/tmp/guidelines_comment.md
-               - Else, create a new comment:
+               - Save the content to /tmp/guidelines_comment.md using a heredoc, then run:
+                 cat > /tmp/guidelines_comment.md <<'EOF'
+                 <the markdown from above>
+                 EOF
                  gh pr comment "${PR_NUMBER}" --repo "${REPOSITORY}" --body-file /tmp/guidelines_comment.md
 
             Constraints:
