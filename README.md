@@ -19,7 +19,7 @@ Automatically validates pull requests against your repository's `CONTRIBUTING.md
 - Optional workflow enforcement on violations (Set repository variable FAIL_ON_GUIDELINE_VIOLATIONS=false to disable enforcement)
 - Handles complex PR content safely (quotes, newlines, etc.)
 
-**Location:** [`examples/workflows/new_workflows/pr-contribution-guidelines.yml`](./examples/workflows/new_workflows/pr-contribution-guidelines-enforcement.yml)
+**Location:** [`examples/workflows/new_workflows/pr-contribution-guidelines-enforcement.yml`](./examples/workflows/new_workflows/pr-contribution-guidelines-enforcement.yml)
 
 ## Setup
 
