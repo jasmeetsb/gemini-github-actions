@@ -22,7 +22,7 @@ Automates validation of pull requests against your repository's CONTRIBUTING.md 
   - Repository variable `APP_ID`
   - Secret `APP_PRIVATE_KEY` (private key for the GitHub App)
 - File: `CONTRIBUTING.md` at the repository root (update the path in the prompt if different)
-- (Optional) Repository variable `FAIL_ON_GUIDELINE_VIOLATIONS=true` to fail the job on violations
+- (Optional) Repository variable `FAIL_ON_GUIDELINE_VIOLATIONS=true` to fail the workflow on violations
 
 **Example Usage:**
 
