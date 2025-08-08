@@ -11,11 +11,8 @@ Automates validation of pull requests against your repository's CONTRIBUTING.md 
 **Key Features:**
 
 - Reads and evaluates PR title, body, and diff against CONTRIBUTING.md
-- Posts a single PR comment with a visible status marker: `<!-- guidelines-check: PASS|FAIL -->`
+- Posts a single PR comment with a visible PASS/FAIL marker in Comment Title and details of compliance status in the comment body
 - Optional enforcement: fail the workflow when violations are detected
-- Fork-safe: supports GitHub App token (uses `actions/create-github-app-token` if configured)
-- Robust handling of quotes/newlines in PR content
-- Minimal permissions; uses `gh` CLI from the Gemini session for comments
 
 **Setup Requirements:**
 
@@ -27,11 +24,6 @@ Automates validation of pull requests against your repository's CONTRIBUTING.md 
 - File: `CONTRIBUTING.md` at the repository root (update the path in the prompt if different)
 - (Optional) Repository variable `FAIL_ON_GUIDELINE_VIOLATIONS=true` to fail the job on violations
 
-**Example Use Cases:**
-
-- Enforce PR templates, required sections, and naming conventions
-- Verify docs/tests/changelog requirements per your guidelines
-- Provide immediate feedback to contributors with a clear checklist
 
 **Workflow File:**
 
