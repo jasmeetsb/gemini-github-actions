@@ -12,7 +12,6 @@ Automates validation of pull requests against your repository's CONTRIBUTING.md 
 
 - Reads and evaluates PR title, body, and diff against CONTRIBUTING.md
 - Posts a single PR comment with a visible status marker: `<!-- guidelines-check: PASS|FAIL -->`
-- Upserts the comment on re-runs (no duplicates)
 - Optional enforcement: fail the workflow when violations are detected
 - Fork-safe: supports GitHub App token (uses `actions/create-github-app-token` if configured)
 - Robust handling of quotes/newlines in PR content
