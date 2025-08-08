@@ -36,5 +36,5 @@ Automates validation of pull requests against your repository's CONTRIBUTING.md 
 
 **Workflow File:**
 
-- Example location in this repo: [workflows/contribution-guidelines-compliance/pr-contribution-guidelines.yml](./pr-contribution-guidelines-enforcement.yml)
+- Example location in this repo: [workflows/contribution-guidelines-compliance/pr-contribution-guidelines-enforcement.yml](./pr-contribution-guidelines-enforcement.yml)
 - Typical usage in a consumer repo: `.github/workflows/pr-contribution-guidelines-enforcement.yml` (copy the file and adjust settings/secrets as needed)
