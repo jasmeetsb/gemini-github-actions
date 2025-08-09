@@ -15,7 +15,7 @@ Automates validation of pull requests against your repository's CONTRIBUTING.md 
 - Optional enforcement: fail the workflow when violations are detected
 
 **Setup Requirements:**
-- Copy [workflows/contribution-guidelines-compliance/pr-contribution-guidelines-enforcement.yml](./pr-contribution-guidelines-enforcement.yml) to your .github/workflows/ folder.
+- Copy [.github/workflows/pr-contribution-guidelines-enforcement.yml](https://github.com/jasmeetsb/gemini-github-actions/blob/main/.github/workflows/pr-contribution-guidelines-enforcement.yml) to your .github/workflows/ folder.
 - Secrets:
   - `GEMINI_API_KEY` 
 - File: `CONTRIBUTING.md` at the repository root (update the path in the prompt if different)
@@ -32,5 +32,5 @@ Automates validation of pull requests against your repository's CONTRIBUTING.md 
 
 **Workflow File:**
 
-- Example location in this repo: [workflows/contribution-guidelines-compliance/pr-contribution-guidelines-enforcement.yml](./pr-contribution-guidelines-enforcement.yml)
+- Example location in this repo: [.github/workflows/pr-contribution-guidelines-enforcement.yml](https://github.com/jasmeetsb/gemini-github-actions/blob/main/.github/workflows/pr-contribution-guidelines-enforcement.yml)
 - Typical usage in a consumer repo: `.github/workflows/pr-contribution-guidelines-enforcement.yml` (copy the file and adjust settings/secrets as needed)
