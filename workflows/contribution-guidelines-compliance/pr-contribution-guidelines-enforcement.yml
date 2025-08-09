@@ -3,6 +3,10 @@ name: "📐 Enforce Contribution Guidelines"
 on:
   pull_request:
     types: [opened, synchronize, edited, reopened, ready_for_review]
+
+  pull_request_review_comment:
+    types: [created]
+  
   issue_comment:
     types: [created]
 
@@ -18,13 +22,22 @@ jobs:
       (
         github.event_name == 'issue_comment' &&
         github.event.issue.pull_request &&
-        contains(github.event.comment.body, '/validate-contribution')
+        contains(github.event.comment.body, '/validate-contribution') &&
+        contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+      ) ||
+      (
+        github.event_name == 'pull_request_review_comment' &&
+        contains(github.event.comment.body, '/validate-contribution') &&
+        contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
       )
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # For PR comments, we need to checkout the PR branch
+          ref: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
 
       - name: Generate GitHub App Token (fork-safe, optional)
         id: generate_token
@@ -34,17 +47,31 @@ jobs:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
+      - name: Get PR number
+        id: get_pr
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "number=${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" == "issue_comment" ]; then
+            echo "number=${{ github.event.issue.number }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" == "pull_request_review_comment" ]; then
+            echo "number=${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Collect PR metadata and diff
         id: pr
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token || secrets.GITHUB_TOKEN }}
-          TITLE: ${{ github.event.pull_request.title }}
-          BODY: ${{ github.event.pull_request.body }}
           REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: ${{ steps.get_pr.outputs.number }}
         run: |
           set -euo pipefail
-          PR_NUMBER="${{ github.event.pull_request.number }}"
           echo "number=${PR_NUMBER}" >> "$GITHUB_OUTPUT"
+
+          # Get PR details using gh CLI
+          PR_DATA=$(gh pr view "${PR_NUMBER}" --repo "${REPOSITORY}" --json title,body)
+          TITLE=$(echo "$PR_DATA" | jq -r '.title')
+          BODY=$(echo "$PR_DATA" | jq -r '.body // ""')
 
           # Safely write PR title (handles quotes and newlines)
           {
@@ -135,6 +162,7 @@ jobs:
 
                If STATUS=="PASS": include:
                - All required guideline items appear satisfied based on the PR title/body/diff.
+
 
                - Save the content to /tmp/guidelines_comment.md using a heredoc, then run:
                  cat > /tmp/guidelines_comment.md <<'EOF'
