@@ -26,6 +26,8 @@ Automates validation of pull requests against your repository's CONTRIBUTING.md 
 - Define contribution guidelines in CONTRIBUTING.md file
 - Open a new PR or update an existing PR, which would then trigger the workflow
 - Workflow will validate the PR against the contribution guidelines and add a comment in the PR with Pass/FAIL status and details of guideline compliance and non-compliance
+  **OR**
+- Add following comment in an existing PR "/validate-contribution" to trigger the workflow
 
 
 **Workflow File:**
