@@ -24,7 +24,6 @@ Automatically validates pull requests against your repository's `CONTRIBUTING.md
 ## Setup
 
 ### Prerequisites
-
 - Google Gemini API key
 - Repository with contribution guidelines (`CONTRIBUTING.md`)
 
